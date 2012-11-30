@@ -1,0 +1,22 @@
+import urllib2
+
+url = urllib2.urlopen('http://www.andlum.com/labs/interest_data.txt')
+html = url.read().split("\r\n")
+interestList = {}
+
+for line in html[0:-1]:
+    splitLine = line.split("\t")
+    if splitLine[1] in interestList:
+        interestList[splitLine[1]].append(splitLine[0])
+    else:
+        interestList[splitLine[1]] = [splitLine[0]]
+        
+afile = open("output.txt", "w")
+for item in interestList:
+    print>>afile, item + ":\n" + str(interestList[item])
+    print item, interestList[item]
+    
+#print interestList
+
+afile.close()
+url.close()
