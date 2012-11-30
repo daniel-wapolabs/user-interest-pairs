@@ -1,5 +1,5 @@
-{"otherInterests": ["iTunes", "Family Guy", "The Simpsons"], "interest": "iTunes"}
-{"otherInterests": ["Roku"], "interest": "Roku"}
-{"otherInterests": ["iTunes", "Family Guy", "The Simpsons"], "interest": "Family Guy"}
-{"otherInterests": ["Video Games"], "interest": "Video Games"}
-{"otherInterests": ["iTunes", "Family Guy", "The Simpsons"], "interest": "The Simpsons"}
+{"otherInterests": ["Family Guy", "The Simpsons"], "interest": "iTunes"}
+{"otherInterests": [], "interest": "Roku"}
+{"otherInterests": ["iTunes", "The Simpsons"], "interest": "Family Guy"}
+{"otherInterests": [], "interest": "Video Games"}
+{"otherInterests": ["iTunes", "Family Guy"], "interest": "The Simpsons"}

@@ -1,4 +1,5 @@
 import urllib2
+import json
 
 url = urllib2.urlopen('http://www.andlum.com/labs/interest_data.txt')
 html = url.read().split("\r\n")
@@ -10,13 +11,20 @@ for line in html[0:-1]:
         interestList[splitLine[1]].append(splitLine[0])
     else:
         interestList[splitLine[1]] = [splitLine[0]]
-        
-afile = open("output.txt", "w")
-for item in interestList:
-    print>>afile, item + ":\n" + str(interestList[item])
-    print item, interestList[item]
-    
-#print interestList
 
-afile.close()
+output = open("output.json", "w")
+# print>>output, "["
+# for item in interestList:
+#     print>>output, json.dumps({"interest": item, "users": interestList[item]})
+
+for item in interestList:
+    sharedInterests = []
+    for j in interestList:
+        if item != j:
+            commonUsers = list(set(interestList[item]).intersection(interestList[j]))
+            if len(commonUsers) > 0:
+                sharedInterests.append(j)
+    print>>output, json.dumps({"interest": item, "otherInterests": sharedInterests})
+
+output.close()
 url.close()
