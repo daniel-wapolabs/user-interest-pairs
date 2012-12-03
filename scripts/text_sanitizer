@@ -1,30 +1,42 @@
-import urllib2
 import json
 
-url = urllib2.urlopen('http://www.andlum.com/labs/interest_data.txt')
-html = url.read().split("\r\n")
+#url = urllib2.urlopen('http://www.andlum.com/labs/interest_data.txt')
 interestList = {}
+f = open('lessdata', "r")
+output = open("output.json", "w")
+html = f.read().split("\n")
+numUsers = []
 
 for line in html[0:-1]:
-    splitLine = line.split("\t")
+    splitLine = line.split("^")
+    if splitLine[0] not in numUsers:
+        numUsers.append(splitLine[0])
+        print str(len(numUsers))
     if splitLine[1] in interestList:
         interestList[splitLine[1]].append(splitLine[0])
     else:
         interestList[splitLine[1]] = [splitLine[0]]
 
-output = open("output.json", "w")
-# print>>output, "["
-# for item in interestList:
-#     print>>output, json.dumps({"interest": item, "users": interestList[item]})
+print "Sample Size:" + str(len(numUsers))
 
+toRemove = []
+for item in interestList:
+    if len(interestList[item]) < 5:
+        toRemove.append(item)
+
+for akey in toRemove:
+    del interestList[akey]
+
+theData = []
 for item in interestList:
     sharedInterests = []
     for j in interestList:
         if item != j:
             commonUsers = list(set(interestList[item]).intersection(interestList[j]))
-            if len(commonUsers) > 0:
+            if len(commonUsers) > 10:
                 sharedInterests.append(j)
-    print>>output, json.dumps({"interest": item, "otherInterests": sharedInterests})
+                theData.append(json.dumps({"name": item, "imports": sharedInterests}))
+print>>output, theData
 
 output.close()
-url.close()
+f.close()
